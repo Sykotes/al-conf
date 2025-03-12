@@ -21,7 +21,7 @@ parseArgs args = do
       case head args of
         "add" -> addAlias file_path (args !! 2) (args !! 3)
         "rm" -> rmAlias file_path $ args !! 2
-        "list" -> listAlias file_path
+        "list" -> listAlias file_path (drop 2 args)
         _ -> error "Unexpected command" -- Use `error` for unrecoverable conditions
 
 validArgs :: [String] -> Maybe String
@@ -33,6 +33,6 @@ validArgs args =
           case cmd of
             "add" -> if length args == 4 && ' ' `notElem` (args !! 2) then Nothing else Just "add"
             "rm" -> if length args == 3 && ' ' `notElem` (args !! 2) then Nothing else Just "rm"
-            "list" -> if length args == 2 then Nothing else Just "list"
+            "list" -> if (args !! 1) `notElem` ["--help", "-h"] then Nothing else Just "list"
             _ -> Just "base"
     _ -> Just "base"
