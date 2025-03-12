@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      AddAlias
       ListAlias
   other-modules:
       Paths_al_conf

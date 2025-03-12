@@ -1,5 +1,6 @@
 module Main (main) where
 
+import AddAlias (addAlias)
 import Control.Exception
 import Control.Monad (unless)
 import ListAlias (listAlias)
@@ -32,6 +33,8 @@ main = do
                 "bash" -> home ++ "/.bashrc"
                 _ -> error "Unexpected command" -- Use `error` for unrecoverable conditions
           case head args of
+            "add" -> addAlias file_path (args !! 2) (args !! 3)
+            "rm" -> listAlias file_path
             "list" -> listAlias file_path
             _ -> error "Unexpected command" -- Use `error` for unrecoverable conditions
         else printHelp "base"
