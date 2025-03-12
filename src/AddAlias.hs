@@ -38,4 +38,4 @@ getAliasName alias_line = case elemIndex '=' x of
     x = drop 6 alias_line
 
 makeNewLine :: String -> String -> String
-makeNewLine alias_name alias_cmd = "\nalias \'" ++ alias_name ++ "\'=\'" ++ alias_cmd ++ "\'\n"
+makeNewLine alias_name alias_cmd = "\nalias " ++ alias_name ++ "=\'" ++ alias_cmd ++ "\'\n"

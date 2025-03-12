@@ -27,6 +27,7 @@ library
   exposed-modules:
       AddAlias
       ListAlias
+      RemoveAlias
   other-modules:
       Paths_al_conf
   autogen-modules:

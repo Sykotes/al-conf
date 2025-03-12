@@ -4,6 +4,7 @@ import AddAlias (addAlias)
 import Control.Exception
 import Control.Monad (unless)
 import ListAlias (listAlias)
+import RemoveAlias (rmAlias)
 import System.Directory (getHomeDirectory)
 import System.Environment (getArgs)
 import System.Exit (exitFailure)
@@ -34,7 +35,7 @@ main = do
                 _ -> error "Unexpected command" -- Use `error` for unrecoverable conditions
           case head args of
             "add" -> addAlias file_path (args !! 2) (args !! 3)
-            "rm" -> listAlias file_path
+            "rm" -> rmAlias file_path $ args !! 2
             "list" -> listAlias file_path
             _ -> error "Unexpected command" -- Use `error` for unrecoverable conditions
         else printHelp "base"
@@ -57,9 +58,57 @@ printHelp help_type = do
   let help_types = ["base", "add", "rm", "list", "invalid"]
   assert (help_type `elem` help_types) $
     case help_type of
-      "base" -> putStrLn "BASE Help"
-      "add" -> putStrLn "ADD Help"
-      "rm" -> putStrLn "REMOVE Help"
-      "list" -> putStrLn "LIST Help"
-      "invalid" -> putStrLn "INVALID Help"
-      _ -> error "Unhandled help_type" -- This shouldn't happen due to the assert
+      "base" ->
+        putStrLn $
+          unlines
+            [ "Usage: al-conf <command> [options]",
+              "Commands:",
+              "  add   <shell> <alias> <command>   Add a new alias",
+              "  rm    <shell> <alias>            Remove an alias",
+              "  list  <shell>                    List all aliases",
+              "  -h, --help                       Show this help message",
+              "",
+              "Supported shells: bash, zsh",
+              "Use 'al-conf <command> --help' for more details on a command."
+            ]
+      "add" ->
+        putStrLn $
+          unlines
+            [ "Usage: al-conf add <shell> <alias> <command>",
+              "Adds a new alias to the specified shell configuration file.",
+              "",
+              "Arguments:",
+              "  <shell>   The shell type (bash or zsh)",
+              "  <alias>   The name of the alias (no spaces allowed)",
+              "  <command> The command the alias should execute",
+              "",
+              "Example:",
+              "  al-conf add zsh ll 'ls -la'"
+            ]
+      "rm" ->
+        putStrLn $
+          unlines
+            [ "Usage: al-conf rm <shell> <alias>",
+              "Removes an alias from the specified shell configuration file.",
+              "",
+              "Arguments:",
+              "  <shell>   The shell type (bash or zsh)",
+              "  <alias>   The name of the alias to remove",
+              "",
+              "Example:",
+              "  al-conf rm bash ll"
+            ]
+      "list" ->
+        putStrLn $
+          unlines
+            [ "Usage: al-conf list <shell>",
+              "Lists all aliases currently defined in the specified shell configuration file.",
+              "",
+              "Arguments:",
+              "  <shell>   The shell type (bash or zsh)",
+              "",
+              "Example:",
+              "  al-conf list zsh"
+            ]
+      "invalid" -> putStrLn "Invalid command. Use 'al-conf --help' for usage information."
+      _ -> error "Unhandled help_type"
