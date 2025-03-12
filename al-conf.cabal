@@ -26,7 +26,9 @@ source-repository head
 library
   exposed-modules:
       AddAlias
+      Help
       ListAlias
+      ParseArgs
       RemoveAlias
   other-modules:
       Paths_al_conf
