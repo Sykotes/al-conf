@@ -45,14 +45,16 @@ printHelp help_type = case help_type of
   "list" ->
     putStrLn $
       unlines
-        [ "Usage: al-conf list <shell>",
+        [ "Usage: al-conf list <shell> [-c] [-f]",
           "Lists all aliases currently defined in the specified shell configuration file.",
           "",
           "Arguments:",
           "  <shell>   The shell type (bash or zsh)",
+          "  -c        Enable coloured output",
+          "  -f        Print the full lines",
           "",
           "Example:",
-          "  al-conf list zsh"
+          "  al-conf list zsh -cf"
         ]
   "invalid" -> putStrLn "Invalid command. Use 'al-conf --help' for usage information."
   _ -> error $ "Unhandled help_type" ++ help_type

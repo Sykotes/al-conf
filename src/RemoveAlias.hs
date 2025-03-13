@@ -21,7 +21,7 @@ rmAlias file_path alias_name = do
         else do
           let new_contents = concat new_file_lines
           writeFile file_path new_contents
-          putStrLn $ "Alias \"" ++ alias_name ++ "\" added"
+          putStrLn $ "Alias \"" ++ alias_name ++ "\" removed"
 
 -- accumulate each line unless it is the alias named
 emptyIfAlias :: String -> String -> String
